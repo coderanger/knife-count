@@ -2,7 +2,6 @@
 
 [![Build Status](https://img.shields.io/travis/coderanger/knife-count.svg)](https://travis-ci.org/coderanger/knife-count)
 [![Gem Version](https://img.shields.io/gem/v/knife-count.svg)](https://rubygems.org/gems/knife-count)
-[![Coverage](https://img.shields.io/codecov/c/github/coderanger/knife-count.svg)](https://codecov.io/github/coderanger/knife-count)
 [![Gemnasium](https://img.shields.io/gemnasium/coderanger/knife-count.svg)](https://gemnasium.com/coderanger/knife-count)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
