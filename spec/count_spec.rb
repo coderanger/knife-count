@@ -55,7 +55,7 @@ describe KnifeCount::Count do
   end # /context test harness baseline
 
   def self.knife_count_command(cmd)
-    command("knife count -s http://localhost:4000/ -k #{File.expand_path('../snakeoil.pem', __FILE__)} #{cmd}")
+    command("knife count -s http://localhost:4000/ -k #{File.expand_path('../snakeoil.pem', __FILE__)} -u spec #{cmd}")
   end
 
   context 'default search' do
