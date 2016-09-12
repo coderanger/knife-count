@@ -43,9 +43,13 @@ describe KnifeCount::Count do
     @server.stop if @server
   end
 
+  def self.knife_command(cmd, knife_cmd='count')
+    command("knife #{knife_cmd} -s http://localhost:4000/ -k #{File.expand_path('../snakeoil.pem', __FILE__)} -u spec #{cmd}")
+  end
+
   context 'test harness baseline' do
     # Test using `knife search` to make sure we know the test harness works.
-    command 'knife search -s http://localhost:4000/ "chef_environment:prod"'
+    knife_command 'chef_environment:prod', 'search'
     its(:stdout) do
       is_expected.to match(/^Node Name:\s+node1$/)
       is_expected.to match(/^Node Name:\s+node2$/)
@@ -54,32 +58,29 @@ describe KnifeCount::Count do
     end
   end # /context test harness baseline
 
-  def self.knife_count_command(cmd)
-    command("knife count -s http://localhost:4000/ -k #{File.expand_path('../snakeoil.pem', __FILE__)} -u spec #{cmd}")
-  end
 
   context 'default search' do
-    knife_count_command ''
+    knife_command ''
     its(:stdout) { is_expected.to eq "4\n" }
   end # /context default search
 
   context 'simple node search' do
-    knife_count_command '"chef_environment:prod"'
+    knife_command '"chef_environment:prod"'
     its(:stdout) { is_expected.to eq "2\n" }
   end # /context simple node search
 
   context 'explicit node search' do
-    knife_count_command 'node "chef_environment:prod"'
+    knife_command 'node "chef_environment:prod"'
     its(:stdout) { is_expected.to eq "2\n" }
   end # /context explicit node search
 
   context 'complex node search' do
-    knife_count_command '"chef_environment:prod AND roles:web"'
+    knife_command '"chef_environment:prod AND roles:web"'
     its(:stdout) { is_expected.to eq "1\n" }
   end # /context complex node search
 
   context 'role search' do
-    knife_count_command 'role "*:*"'
+    knife_command 'role "*:*"'
     its(:stdout) { is_expected.to eq "2\n" }
   end # /context role search
 
