@@ -54,28 +54,32 @@ describe KnifeCount::Count do
     end
   end # /context test harness baseline
 
+  def self.knife_count_command(cmd)
+    command("knife count -s http://localhost:4000/ -k #{File.expand_path('../snakeoil.pem', __FILE__)} #{cmd}")
+  end
+
   context 'default search' do
-    command 'knife count -s http://localhost:4000/'
+    knife_count_command ''
     its(:stdout) { is_expected.to eq "4\n" }
   end # /context default search
 
   context 'simple node search' do
-    command 'knife count -s http://localhost:4000/ "chef_environment:prod"'
+    knife_count_command '"chef_environment:prod"'
     its(:stdout) { is_expected.to eq "2\n" }
   end # /context simple node search
 
   context 'explicit node search' do
-    command 'knife count -s http://localhost:4000/ node "chef_environment:prod"'
+    knife_count_command 'node "chef_environment:prod"'
     its(:stdout) { is_expected.to eq "2\n" }
   end # /context explicit node search
 
   context 'complex node search' do
-    command 'knife count -s http://localhost:4000/ "chef_environment:prod AND roles:web"'
+    knife_count_command '"chef_environment:prod AND roles:web"'
     its(:stdout) { is_expected.to eq "1\n" }
   end # /context complex node search
 
   context 'role search' do
-    command 'knife count -s http://localhost:4000/ role "*:*"'
+    knife_count_command 'role "*:*"'
     its(:stdout) { is_expected.to eq "2\n" }
   end # /context role search
 
